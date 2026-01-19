@@ -1,3 +1,5 @@
+import './input.css';
+
 console.log('John GIbbons Script loaded!');
 
 if (typeof window.$ !== 'undefined') {
