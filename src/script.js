@@ -10,3 +10,7 @@ if (typeof window.gsap !== 'undefined') {
   console.log('GSAP is available'); } else {
   console.log('GSAP is not available');
 }
+
+
+
+gsap.to('.heading-style-h1', { x: 1000, duration: 2, ease: 'power2.inOut' });
