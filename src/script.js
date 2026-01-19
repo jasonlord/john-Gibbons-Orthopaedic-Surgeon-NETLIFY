@@ -16,6 +16,8 @@ if (typeof window.gsap !== 'undefined') {
 gsap.to('.heading-style-h1', { x: 10, duration: 2, ease: 'power2.inOut' });
 
 
+import _ from 'lodash';
+
 const x = [1, 2, 3, 4, 5];
 // Use lodash to reverse the array 'x'
 const reversedX = _.reverse([...x]);

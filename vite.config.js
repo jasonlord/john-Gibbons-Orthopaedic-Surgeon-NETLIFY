@@ -16,8 +16,8 @@ export default defineConfig({
         // Map external module names to their global variable names
         globals: {
           'jquery': 'jQuery',  // When you import 'jquery', use global 'jQuery' (which also has $)
-          'gsap': 'gsap',      // When you import 'gsap', use global 'gsap'
-          'lodash': '_'        // When you import 'lodash', use global '_'
+          'gsap': 'gsap'       // When you import 'gsap', use global 'gsap'
+          // 'lodash': '_'     // Commented out - lodash will be bundled from node_modules
         }
       },
       // Mark dependencies as external if they're already loaded in Webflow (from CDN)
