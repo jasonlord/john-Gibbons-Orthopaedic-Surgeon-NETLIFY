@@ -13,4 +13,4 @@ if (typeof window.gsap !== 'undefined') {
 
 
 
-gsap.to('.heading-style-h1', { x: 1000, duration: 2, ease: 'power2.inOut' });
+gsap.to('.heading-style-h1', { x: 10, duration: 2, ease: 'power2.inOut' });
