@@ -1,1 +1,79 @@
-@import "tailwindcss";
+/* 
+  Custom Tailwind Theme Overrides
+  This file extends Tailwind CDN with custom theme variables.
+  
+  IMPORTANT: Load this CSS file AFTER the Tailwind CDN script in Webflow.
+  
+  In Webflow:
+  1. Add Tailwind CDN: <script src="https://cdn.tailwindcss.com"></script>
+  2. Add this CSS: <link rel="stylesheet" href="https://your-site.netlify.app/style.css">
+*/
+
+:root {
+  /* Custom Colors - These will be available as Tailwind classes */
+  --color-primary: #3B82F6;      /* Use as: bg-primary, text-primary, etc. */
+  --color-secondary: #8B5CF6;   
+  --color-accent: #10B981;      
+  --color-brand-blue: #1E40AF;
+  --color-brand-purple: #7C3AED;
+  
+  /* Custom Spacing */
+  --spacing-18: 4.5rem;         /* 72px - use as p-18, m-18, etc. */
+  --spacing-22: 5.5rem;         /* 88px */
+  --spacing-26: 6.5rem;         /* 104px */
+  
+  /* Custom Shadows */
+  --shadow-custom: 0 10px 40px rgba(0, 0, 0, 0.1);
+  --shadow-custom-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* 
+  Custom Utility Classes
+  These extend Tailwind with your brand-specific utilities
+*/
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.bg-accent {
+  background-color: var(--color-accent);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.shadow-custom {
+  box-shadow: var(--shadow-custom);
+}
+
+.shadow-custom-lg {
+  box-shadow: var(--shadow-custom-lg);
+}
+
+/* Custom spacing utilities */
+.p-18 {
+  padding: var(--spacing-18);
+}
+
+.m-18 {
+  margin: var(--spacing-18);
+}
+
+/* Add any other custom utilities here */

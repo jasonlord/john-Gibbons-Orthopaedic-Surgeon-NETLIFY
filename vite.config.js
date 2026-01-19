@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite';
-import tailwindcss from '@tailwindcss/vite';
+// Tailwind CDN will be used instead, so we don't need the plugin for utilities
+// But we can still use it to process theme CSS if needed
+// import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),
+    // tailwindcss(), // Commented out - using CDN instead
   ],
   build: {
     lib: {
