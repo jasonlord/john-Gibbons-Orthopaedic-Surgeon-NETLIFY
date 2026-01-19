@@ -1,0 +1,22 @@
+{
+  "name": "netlify-cdn-webflow",
+  "version": "1.0.0",
+  "description": "JavaScript CDN for Webflow projects deployed via Netlify",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "deploy": "npm run build && netlify deploy --prod"
+  },
+  "keywords": [
+    "netlify",
+    "cdn",
+    "webflow"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "dependencies": {}
+}
