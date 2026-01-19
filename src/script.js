@@ -14,3 +14,13 @@ if (typeof window.gsap !== 'undefined') {
 
 
 gsap.to('.heading-style-h1', { x: 10, duration: 2, ease: 'power2.inOut' });
+
+
+const x = [1, 2, 3, 4, 5];
+// Use lodash to reverse the array 'x'
+const reversedX = _.reverse([...x]);
+
+// Replace the text content of all elements with class "heading-style-h1" with the reversed array as string
+document.querySelectorAll('.heading-style-h1').forEach(el => {
+  el.textContent = reversedX.join(', ');
+});
