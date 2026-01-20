@@ -281,47 +281,11 @@ export const initImmersiveFooter = () => {
   footer.style.visibility = 'visible';
   footer.style.opacity = '1';
 
-  // Function to set proper scroll space
-  const setScrollSpace = () => {
-    const viewportHeight = window.innerHeight;
-    // Set marginBottom to ensure we can scroll past the main content to see the full footer
-    // Use a slightly larger value to ensure full footer visibility
-    const footerSpace = viewportHeight + 50; // Extra 50px buffer
-    mainContent.style.marginBottom = `${footerSpace}px`;
-    
-    // Force layout recalculation
-    void mainContent.offsetHeight;
-    
-    // Calculate required document height
-    const mainContentHeight = mainContent.offsetHeight;
-    const requiredHeight = mainContentHeight + viewportHeight;
-    const currentScrollHeight = document.documentElement.scrollHeight;
-    
-    // If document isn't tall enough, add padding to body to ensure scrollability
-    if (currentScrollHeight < requiredHeight) {
-      const extraSpace = requiredHeight - currentScrollHeight + 100; // Extra buffer
-      document.body.style.paddingBottom = `${extraSpace}px`;
-    } else {
-      // Remove padding if not needed
-      document.body.style.paddingBottom = '';
-    }
-    
-    console.log('Scroll space set:', {
-      viewportHeight,
-      mainContentHeight,
-      currentScrollHeight,
-      requiredHeight,
-      paddingBottom: document.body.style.paddingBottom
-    });
-  };
-
-  // Set initial scroll space
-  setScrollSpace();
+  // Set marginBottom of mainContent to create space for footer
+  mainContent.style.marginBottom = `${window.innerHeight}px`;
 
   // Wait for layout to settle, then create ScrollTriggers
   setTimeout(() => {
-    // Recalculate scroll space after layout settles (important for Webflow)
-    setScrollSpace();
     // Set initial border radius
     mainContent.style.borderBottomLeftRadius = `${MAX_RADIUS}px`;
     mainContent.style.borderBottomRightRadius = `${MAX_RADIUS}px`;
@@ -394,17 +358,9 @@ export const initImmersiveFooter = () => {
 
   // Handle resize
   const resizeHandler = () => {
-    setScrollSpace();
+    mainContent.style.marginBottom = `${window.innerHeight}px`;
     ScrollTrigger.refresh();
   };
-  
-  // Also recalculate after images and other content loads (Webflow specific)
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      setScrollSpace();
-      ScrollTrigger.refresh();
-    }, 100);
-  });
 
   window.addEventListener('resize', resizeHandler);
 
