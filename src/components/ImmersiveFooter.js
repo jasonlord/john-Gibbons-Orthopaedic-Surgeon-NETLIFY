@@ -220,9 +220,21 @@ export const ImmersiveFooter = () => {
  */
 export const initImmersiveFooter = () => {
   // Load Lucide icons if available
-  if (typeof window.lucide !== 'undefined') {
-    window.lucide.createIcons();
-  }
+  const initLucideIcons = () => {
+    if (typeof window.lucide !== 'undefined') {
+      try {
+        window.lucide.createIcons();
+      } catch (error) {
+        console.warn('Error creating Lucide icons:', error);
+      }
+    }
+  };
+  
+  // Try immediately
+  initLucideIcons();
+  
+  // Also try after a short delay in case Lucide loads asynchronously
+  setTimeout(initLucideIcons, 500);
 
   // Animate all h1 elements to scale to 2 with yoyo
   function initGSAPAnimations() {
@@ -260,7 +272,16 @@ export const initImmersiveFooter = () => {
   const navbar = document.getElementById('navbar');
 
   if (!mainContent || !footer || !navbar) {
-    console.warn('Immersive footer elements not found');
+    console.warn('Immersive footer elements not found', {
+      mainContent: !!mainContent,
+      footer: !!footer,
+      navbar: !!navbar
+    });
+    // Still try to make footer visible even if other elements are missing
+    if (footer) {
+      footer.style.visibility = 'visible';
+      footer.style.opacity = '1';
+    }
     return () => clearInterval(timeInterval);
   }
 
@@ -268,8 +289,9 @@ export const initImmersiveFooter = () => {
   const MAX_RADIUS = 60; // 60px rounded corners
   const STRAIGHTEN_THRESHOLD = 300; // The last 300px of scroll
 
-  // Make footer visible
+  // Make footer visible (redundant now but kept for safety)
   footer.style.visibility = 'visible';
+  footer.style.opacity = '1';
 
   // Set marginBottom of mainContent to create space for footer
   mainContent.style.marginBottom = `${window.innerHeight}px`;
