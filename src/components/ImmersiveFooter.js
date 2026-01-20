@@ -260,7 +260,16 @@ export const initImmersiveFooter = () => {
   const navbar = document.getElementById('navbar');
 
   if (!mainContent || !footer || !navbar) {
-    console.warn('Immersive footer elements not found');
+    console.warn('Immersive footer elements not found', {
+      mainContent: !!mainContent,
+      footer: !!footer,
+      navbar: !!navbar
+    });
+    // Still try to make footer visible even if other elements are missing
+    if (footer) {
+      footer.style.visibility = 'visible';
+      footer.style.opacity = '1';
+    }
     return () => clearInterval(timeInterval);
   }
 
@@ -268,14 +277,51 @@ export const initImmersiveFooter = () => {
   const MAX_RADIUS = 60; // 60px rounded corners
   const STRAIGHTEN_THRESHOLD = 300; // The last 300px of scroll
 
-  // Make footer visible
+  // Make footer visible (redundant now but kept for safety)
   footer.style.visibility = 'visible';
+  footer.style.opacity = '1';
 
-  // Set marginBottom of mainContent to create space for footer
-  mainContent.style.marginBottom = `${window.innerHeight}px`;
+  // Function to set proper scroll space
+  const setScrollSpace = () => {
+    const viewportHeight = window.innerHeight;
+    // Set marginBottom to ensure we can scroll past the main content to see the full footer
+    // Use a slightly larger value to ensure full footer visibility
+    const footerSpace = viewportHeight + 50; // Extra 50px buffer
+    mainContent.style.marginBottom = `${footerSpace}px`;
+    
+    // Force layout recalculation
+    void mainContent.offsetHeight;
+    
+    // Calculate required document height
+    const mainContentHeight = mainContent.offsetHeight;
+    const requiredHeight = mainContentHeight + viewportHeight;
+    const currentScrollHeight = document.documentElement.scrollHeight;
+    
+    // If document isn't tall enough, add padding to body to ensure scrollability
+    if (currentScrollHeight < requiredHeight) {
+      const extraSpace = requiredHeight - currentScrollHeight + 100; // Extra buffer
+      document.body.style.paddingBottom = `${extraSpace}px`;
+    } else {
+      // Remove padding if not needed
+      document.body.style.paddingBottom = '';
+    }
+    
+    console.log('Scroll space set:', {
+      viewportHeight,
+      mainContentHeight,
+      currentScrollHeight,
+      requiredHeight,
+      paddingBottom: document.body.style.paddingBottom
+    });
+  };
+
+  // Set initial scroll space
+  setScrollSpace();
 
   // Wait for layout to settle, then create ScrollTriggers
   setTimeout(() => {
+    // Recalculate scroll space after layout settles (important for Webflow)
+    setScrollSpace();
     // Set initial border radius
     mainContent.style.borderBottomLeftRadius = `${MAX_RADIUS}px`;
     mainContent.style.borderBottomRightRadius = `${MAX_RADIUS}px`;
@@ -348,9 +394,17 @@ export const initImmersiveFooter = () => {
 
   // Handle resize
   const resizeHandler = () => {
-    mainContent.style.marginBottom = `${window.innerHeight}px`;
+    setScrollSpace();
     ScrollTrigger.refresh();
   };
+  
+  // Also recalculate after images and other content loads (Webflow specific)
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      setScrollSpace();
+      ScrollTrigger.refresh();
+    }, 100);
+  });
 
   window.addEventListener('resize', resizeHandler);
 
