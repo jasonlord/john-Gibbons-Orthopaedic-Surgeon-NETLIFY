@@ -4,8 +4,9 @@
   "description": "JavaScript CDN for Webflow projects deployed via Netlify",
   "type": "module",
   "scripts": {
+    "dev": "vite",
     "build": "vite build",
-    "dev": "vite build --watch",
+    "preview": "vite preview",
     "deploy": "npm run build && netlify deploy --prod"
   },
   "keywords": [
@@ -21,6 +22,7 @@
     "vite": "^5.0.0"
   },
   "dependencies": {
+    "gsap": "^3.12.5",
     "lodash": "^4.17.21"
   }
 }

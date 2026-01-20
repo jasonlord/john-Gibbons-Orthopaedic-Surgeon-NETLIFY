@@ -1,30 +1,38 @@
 import './input.css';
-
-console.log('John GIbbons Script loaded!');
-
-if (typeof window.$ !== 'undefined') {
-  console.log('jQuery is available');
-} else {
-  console.log('jQuery is not available');
+import gsap from 'gsap';
+if (typeof window.gsap === 'undefined') {
+  window.gsap = gsap;
 }
+import { ImmersiveFooter, initImmersiveFooter } from './components/ImmersiveFooter.js';
+import { initHeading } from './components/Heading.js';
 
-if (typeof window.gsap !== 'undefined') {
-  console.log('GSAP is available'); } else {
-  console.log('GSAP is not available');
-}
-
+// Make GSAP available globally for components that use window.gsap
 
 
-gsap.to('.heading-style-h1', { x: 10, duration: 2, ease: 'power2.inOut' });
+console.log('Script loaded');
 
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOMContentLoaded fired');
+  
+  // Initialize heading component
+  initHeading();
 
-import _ from 'lodash';
+  // Replace Webflow divs with Immersive Footer component
+  // Add a div with class "webflow-immersive-footer" in Webflow
+  document.querySelectorAll('.webflow-immersive-footer').forEach(el => {
+    el.innerHTML = ImmersiveFooter();
+    // Initialize the footer functionality
+    initImmersiveFooter();
+    // Add body class for styles
+    document.body.classList.add('immersive-footer');
+  });
 
-const x = [1, 2, 3, 4, 5];
-// Use lodash to reverse the array 'x'
-const reversedX = _.reverse([...x]);
-
-// Replace the text content of all elements with class "heading-style-h1" with the reversed array as string
-document.querySelectorAll('.heading-style-h1').forEach(el => {
-  el.textContent = reversedX.join(', ');
+  // Load Lucide icons if not already loaded
+  if (typeof window.lucide === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/lucide@latest';
+    document.head.appendChild(script);
+  }
 });
+

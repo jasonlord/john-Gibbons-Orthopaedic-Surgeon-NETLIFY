@@ -1,12 +1,18 @@
 import { defineConfig } from 'vite';
-// Tailwind CDN will be used instead, so we don't need the plugin for utilities
-// But we can still use it to process theme CSS if needed
-// import tailwindcss from '@tailwindcss/vite';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [
-    // tailwindcss(), // Commented out - using CDN instead
+    tailwindcss(), // Tailwind v4 plugin
   ],
+  
+  // Dev server config (for npm run dev - preview mode)
+  server: {
+    open: true,
+    port: 5173
+  },
+  
+  // Build config (for npm run build - production/library mode)
   build: {
     lib: {
       entry: 'src/script.js',
