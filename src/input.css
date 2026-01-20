@@ -92,8 +92,7 @@ body.immersive-footer {
   width: 100%;
   height: 100vh;
   z-index: 0;
-  visibility: visible; /* Changed from hidden - footer should always be visible */
-  opacity: 1; /* Ensure it's fully visible */
+  visibility: hidden;
 }
 
 /* Wrap provides a layer for the glow that can extend beyond rounded corners */
